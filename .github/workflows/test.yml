@@ -8,7 +8,7 @@ on: # rebuild any PRs and main branch changes
 
 env:
   BASE: main
-  ORIGIN: origin
+  REMOTE: origin
 
 jobs:
   build: # make sure build/ci work properly
@@ -28,10 +28,10 @@ jobs:
 
       - name: "Fetch"
         run: |
-          git fetch ${{ env.ORIGIN }} ${{ env.BASE }}
+          git fetch ${{ env.REMOTE }} ${{ env.BASE }}
       
       - name: "RUN Test"
         uses: ./
         with:
           base: ${{ env.BASE }}
-          origin: ${{ env.ORIGIN }}
+          origin: ${{ env.REMOTE }}
