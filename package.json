@@ -1,6 +1,6 @@
 {
   "name": "require-rebase-action",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "description": "This action is used to check if a git rebase was performed whe pull request",
   "main": "lib/main.js",

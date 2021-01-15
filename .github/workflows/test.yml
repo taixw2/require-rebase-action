@@ -23,14 +23,14 @@ jobs:
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
-      - name: "Checkout"
+      - name: 'Checkout'
         uses: actions/checkout@v2
 
-      - name: "Fetch"
+      - name: 'Fetch'
         run: |
           git fetch ${{ env.REMOTE }} ${{ env.BASE }}
-      
-      - name: "RUN Test"
+
+      - name: 'RUN Test'
         uses: ./
         with:
           base: ${{ env.BASE }}

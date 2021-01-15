@@ -42,9 +42,6 @@ async function run(): Promise<void> {
     const currentCommitArgs = printCommitIdsCommandArgs(maxBehindBase)
     await exec('git', currentCommitArgs, {listeners: currentCommitListener.listeners})
 
-    console.log('\n\n\n')
-    console.log('currentCommitIds', currentCommitListener.output)
-
     const baseCommitListener = stdoutListeners()
     const baseCommitArgs = printCommitIdsCommandArgs(1, baseBranch)
     await exec('git', baseCommitArgs, {listeners: baseCommitListener.listeners})
