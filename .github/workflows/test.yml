@@ -19,6 +19,7 @@ jobs:
           npm install
       - run: |
           npm run all
+
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
@@ -30,7 +31,7 @@ jobs:
           git fetch ${{ env.ORIGIN }} ${{ env.BASE }}
       
       - name: "RUN Test"
-      - uses: ./
+        uses: ./
         with:
           base: ${{ env.BASE }}
           origin: ${{ env.ORIGIN }}
