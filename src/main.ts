@@ -26,9 +26,12 @@ function stdoutListeners() {
 
 async function run(): Promise<void> {
   try {
-    const baseBranch: string = getInput('base') || 'origin/main'
+    const baseRemote: string = getInput('remote') || 'origin'
+    const baseBranchName: string = getInput('base') || 'main'
     const maxBehindBaseStr: string = getInput('max-behind-base') || '100'
     const maxBehindBase = Number(maxBehindBaseStr)
+
+    const baseBranch = baseRemote + '/' + baseBranchName
 
     if (!maxBehindBase) {
       setFailed('max-behind-base must be an integer greater than 0')
