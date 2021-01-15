@@ -6,6 +6,10 @@ on: # rebuild any PRs and main branch changes
       - main
       - 'releases/*'
 
+env:
+  BASE: main
+  ORIGIN: origin
+
 jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
@@ -16,15 +20,17 @@ jobs:
       - run: |
           npm run all
   test: # make sure the action works on a clean machine without building
-    env:
-      BASE: main
-      ORIGIN: origin
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: |
-          git fetch ${ORIGIN} ${MAIN}
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Fetch"
+        run: |
+          git fetch ${{ env.ORIGIN }} ${{ env.BASE }}
+      
+      - name: "RUN Test"
       - uses: ./
         with:
-          base: ${BASE}
-          origin: ${ORIGIN}
+          base: ${{ env.BASE }}
+          origin: ${{ env.ORIGIN }}
