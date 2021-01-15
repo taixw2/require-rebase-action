@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "require-rebase-action",
+  "version": "0.0.1",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "This action is used to check if a git rebase was performed whe pull request",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -18,6 +18,8 @@
     "url": "git+https://github.com/actions/typescript-action.git"
   },
   "keywords": [
+    "pull-request",
+    "git-rebase",
     "actions",
     "node",
     "setup"
@@ -25,7 +27,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.6"
+    "@actions/core": "^1.2.6",
+    "@actions/exec": "^1.0.4"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",
