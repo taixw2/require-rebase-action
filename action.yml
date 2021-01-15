@@ -1,11 +1,15 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'require-rebase-action'
+description: 'This action is used to check if a git rebase was performed whe pull request'
+author: 'XinOuyang'
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  base:
+    required: false
+    description: 'Enter the name of the branch to be rebase, either main or master or whatever you master branch name is'
+    default: 'origin/main'
+  max-behind-base:
+    required: false
+    description: 'Enter the maximum depth of the query to be performed'
+    default: '100'
 runs:
   using: 'node12'
   main: 'dist/index.js'

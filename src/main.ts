@@ -1,18 +1,56 @@
-import * as core from '@actions/core'
-import {wait} from './wait'
+import {getInput, setFailed} from '@actions/core'
+import {exec} from '@actions/exec'
+
+function printCommitIdsCommandArgs(maxBehindBase: number, branch?: string) {
+  const commandArgs = ['log']
+  if (branch) {
+    commandArgs.push(branch)
+  }
+  commandArgs.push('-n', String(maxBehindBase), '--pretty=oneline', '--pretty=format:"%H"')
+  return commandArgs
+}
+
+function stdoutListeners() {
+  let ref = ''
+  return {
+    get output() {
+      return ref.split('\n')
+    },
+    listeners: {
+      stdout(data: Buffer) {
+        ref += data.toString('utf-8').replace(/"/g, '')
+      }
+    }
+  }
+}
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const baseBranch: string = getInput('base') || 'origin/main'
+    const maxBehindBaseStr: string = getInput('max-behind-base') || '100'
+    const maxBehindBase = Number(maxBehindBaseStr)
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    if (!maxBehindBase) {
+      setFailed('max-behind-base must be an integer greater than 0')
+      return
+    }
 
-    core.setOutput('time', new Date().toTimeString())
+    const currentCommitListener = stdoutListeners()
+    const currentCommitArgs = printCommitIdsCommandArgs(maxBehindBase)
+    await exec('git', currentCommitArgs, {listeners: currentCommitListener.listeners})
+
+    console.log('\n\n\n')
+    console.log('currentCommitIds', currentCommitListener.output)
+
+    const baseCommitListener = stdoutListeners()
+    const baseCommitArgs = printCommitIdsCommandArgs(1, baseBranch)
+    await exec('git', baseCommitArgs, {listeners: baseCommitListener.listeners})
+
+    if (!currentCommitListener.output.includes(baseCommitListener.output[0])) {
+      setFailed(`The current branch must be rebase from the ${baseBranch} branch`)
+    }
   } catch (error) {
-    core.setFailed(error.message)
+    setFailed(error.message)
   }
 }
 
