@@ -833,10 +833,10 @@
     "@typescript-eslint/types" "4.13.0"
     eslint-visitor-keys "^2.0.0"
 
-"@vercel/ncc@^0.25.1":
-  version "0.25.1"
-  resolved "https://registry.npm.taobao.org/@vercel/ncc/download/@vercel/ncc-0.25.1.tgz#a4aacdb508ac496fc0c63a3c3203d700a619cc0e"
-  integrity sha1-pKrNtQisSW/Axjo8MgPXAKYZzA4=
+"@vercel/ncc@^0.28.6":
+  version "0.28.6"
+  resolved "https://registry.yarnpkg.com/@vercel/ncc/-/ncc-0.28.6.tgz#073c0ce8e0269210c0a9f180fb0bf949eecc20e0"
+  integrity sha512-t4BoSSuyK8BZaUE0gV18V6bkFs4st7baumtFGa50dv1tMu2GDBEBF8sUZaKBdKiL6DzJ2D2+XVCwYWWDcQOYdQ==
 
 abab@^2.0.0, abab@^2.0.3:
   version "2.0.5"
